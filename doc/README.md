@@ -86,27 +86,27 @@ This activity should distinguish between the levels
 
 This is the start screen. If the button settings is clicked, it will go to the settings screen. If an image is clicked, it will go to the startgame screen.
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/startscreen.png)</center>
+<center>![startscreen](https://github.com/Rukshar/Native-App/blob/master/doc/startscreen.png)</center>
 
 This is the settings screen. Here the difficulty of the puzzle can be selected, and the sound can be turned on and off. If "back" is clicked, it will go back to the start screen.
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/settings.png)</center>
+<center>![settings](https://github.com/Rukshar/Native-App/blob/master/doc/settings.png)</center>
 
 This is the startgame screen. For 3 seconds the chosen image is displayed as solved. After that the view will be changed to the shuffled image as can be seen in the startgame2 screen. 
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/startgame.png)</center>
+<center>![startgame](https://github.com/Rukshar/Native-App/blob/master/doc/startgame.png)</center>
 
 This is the startgame2 screen. Here the tiles can be swiped. Also the menubutton of the phone can be used to select the play settings. If the puzzle is solved it will go to the solved screen.
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/startgame2.png)</center>
+<center>![startgame2](https://github.com/Rukshar/Native-App/blob/master/doc/startgame2.png)</center>
 
 This is the playsettings screen and is called when the menubutton of the phone is cicked. If resume is clicked, it will go back to the puzzle (as in startgame2), if quit is clicked it will go back to the start screen, if the level is changed it will go back to the startgame screen with the same image however sliced to the difficulties settings. The sound can be turned on and off. 
 
-<center>[playsettings]!(https://github.com/Rukshar/Native-App/blob/master/doc/playsettings.png)</center>
+<center>![playsettings](https://github.com/Rukshar/Native-App/blob/master/doc/playsettings.png)</center>
 
 This is the solved screen. It congratulates the user and displays the number of sets used to solve the puzzle. The user can click the menu button, which goes back to the start screen.
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/solved.png)</center>
+<center>![solved](https://github.com/Rukshar/Native-App/blob/master/doc/solved.png)</center>
 
 ## APIs
 
