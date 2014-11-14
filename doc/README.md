@@ -102,7 +102,7 @@ This is the startgame2 screen. Here the tiles can be swiped. Also the menubutton
 
 This is the playsettings screen and is called when the menubutton of the phone is cicked. If resume is clicked, it will go back to the puzzle (as in startgame2), if quit is clicked it will go back to the start screen, if the level is changed it will go back to the startgame screen with the same image however sliced to the difficulties settings. The sound can be turned on and off. 
 
-<center>!(https://github.com/Rukshar/Native-App/blob/master/doc/playsettings.png)</center>
+!(https://github.com/Rukshar/Native-App/blob/master/doc/playsettings.png)
 
 This is the solved screen. It congratulates the user and displays the number of sets used to solve the puzzle. The user can click the menu button, which goes back to the start screen.
 
