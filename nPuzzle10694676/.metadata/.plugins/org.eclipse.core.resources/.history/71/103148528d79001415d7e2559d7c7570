@@ -34,7 +34,7 @@ public class GamePlay extends Activity {
 			Bitmap empty = BitmapFactory.decodeResource(this.getResources(), R.drawable.square);
 			height = background.getHeight();
 			width =  background.getWidth();
-			columns = 4;
+			columns = 5;
 			//System.out.println(height);
 			//System.out.println(width);
 			//System.out.println(empty.getHeight());
