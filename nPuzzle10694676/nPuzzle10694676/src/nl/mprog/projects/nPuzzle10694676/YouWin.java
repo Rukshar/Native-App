@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class YouWin extends Activity {
 
@@ -17,11 +18,14 @@ public class YouWin extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.youwin);
 		Intent i = getIntent();
-		int position = (Integer) i.getExtras().get("Image");
+		int position = (Integer) i.getExtras().get("Images");
+		int shuffles = (Integer) i.getExtras().get("shuffles");
 		
-		Bitmap background = BitmapFactory.decodeResource(this.getResources(), GridAdapter.puzzles[position]);
+		Bitmap background = GridAdapter.puzzles.get(position);
 		ImageView iv = (ImageView) findViewById(R.id.imageView2);
+		TextView finalShuffles = (TextView) findViewById(R.id.steps);
 		iv.setImageBitmap(background);
+		finalShuffles.setText("Number of shuffles: " + shuffles);
 		Button menu = (Button) findViewById(R.id.menu);
 		menu.setOnClickListener(new View.OnClickListener() {
 			

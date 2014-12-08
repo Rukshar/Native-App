@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,12 +43,13 @@ public class PlayAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ImageView iv;
-		int para = GamePlay.height/GamePlay.columns;
+		int para1 = GamePlay.screenWidth/GamePlay.columns;
+		
 		if(view == null){
 			iv = new ImageView(context);
-			iv.setLayoutParams(new GridView.LayoutParams(para,para));
+			iv.setLayoutParams(new GridView.LayoutParams(para1,para1));
 			iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			iv.setPadding(5, 5, 5, 5);
+			iv.setPadding(3, 3, 3, 3);
 		} else{
 			iv = (ImageView) view;
 		}

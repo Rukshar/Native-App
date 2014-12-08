@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/reshuffle"
+        android:orderInCategory="100"
+        android:title="Shuffle"/>
+    
+    <item
+        android:id="@+id/easygame"
+        android:orderInCategory="100"
+        android:title="Easy"/>
+    
+     <item
+        android:id="@+id/mediumgame"
+        android:orderInCategory="100"
+        android:title="Medium"/>
+     
+      <item
+        android:id="@+id/difficultgame"
+        android:orderInCategory="100"
+        android:title="Difficult"/>
+      
+      <item
+        android:id="@+id/quit"
+        android:orderInCategory="100"
+        android:title="Quit"/>
+    
+
+</menu>
