@@ -21,7 +21,6 @@ public class GridAdapter extends BaseAdapter {
 		puzzles = puzim;
 	}
 
-
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -44,9 +43,10 @@ public class GridAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ImageView iview;
+		int imageSize = ImageSelectionActivity.screenWidth/3;
 		if (view == null){
 			iview = new ImageView(context);
-			iview.setLayoutParams(new GridView.LayoutParams(300,300));
+			iview.setLayoutParams(new GridView.LayoutParams(imageSize,imageSize));
 			iview.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			iview.setPadding(8, 8, 8, 8);
 		} else{

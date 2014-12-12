@@ -1,0 +1,111 @@
+package nl.mprog.projects.nPuzzle10694676;
+
+import java.util.ArrayList;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+
+public class ImageSelectionActivity extends ActionBarActivity {
+	private ArrayList<Bitmap> imagess;
+	private GridAdapter gridAdapter;
+	public static int screenWidth;
+    
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_image_selection);
+        TheScreenWidth();
+        imageLibrary();
+        
+		gridAdapter = new GridAdapter(getApplicationContext(), imagess);
+        GridView gv = (GridView) findViewById(R.id.gridview);
+        gv.setAdapter(gridAdapter);
+        gv.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				startGame(position);
+			}
+        });  
+        
+		// LOAD A SAVED STATE IF THERE IS ONE
+		SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
+		boolean savedState = sharedPreferences.getBoolean("saved", false);
+		int imageIndex = sharedPreferences.getInt("imageIndex", 0);
+		if (savedState){
+			startGame(imageIndex);
+		}
+    }
+	
+	// STARTS GAMEPLAY ACTIVITY
+	public void startGame(int imageIndex){
+		Intent intent = new Intent(getApplicationContext(), GamePlayActivity.class);
+		intent.putExtra("id", imageIndex);
+		startActivity(intent);
+	}
+	
+	// Gets all the images
+	public void imageLibrary(){
+        imagess = new ArrayList<Bitmap>();
+        
+        for (int i = 0; i <= 10; i++){
+        	int res = getResources().getIdentifier("puzzle_" + i, "drawable", getPackageName());
+        	if (res != 0){
+        		Bitmap b = BitmapFactory.decodeResource(getResources(), res);
+        		Bitmap scaled = Bitmap.createScaledBitmap(b, screenWidth, screenWidth, true);
+        		imagess.add(scaled);
+        	}
+        }	
+	}
+	
+	// DETERMINES THE SCREENWIDTH OF DEVICE
+	public void TheScreenWidth()
+	{
+		DisplayMetrics dm = getResources().getDisplayMetrics(); 
+		screenWidth = dm.widthPixels;
+	}
+	
+	//ON OPTIONS MENU
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.image_selection, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()){
+        	case (R.id.easy):
+        		GamePlayActivity.columns = 3;
+        	return true;
+        	
+        	case (R.id.medium):
+        		GamePlayActivity.columns = 4;
+        	return true;
+        	
+        	case (R.id.difficult):
+        		GamePlayActivity.columns = 5;
+        	return true;
+        	
+        	default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+}

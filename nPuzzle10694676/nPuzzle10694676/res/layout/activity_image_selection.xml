@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="nl.mprog.projects.nPuzzle10694676.ImageSelection" >
+    tools:context="nl.mprog.projects.nPuzzle10694676.ImageSelectionActivity" >
 
     <GridView
     android:id="@+id/gridview"
@@ -14,7 +14,7 @@
     android:layout_height="fill_parent"
     android:gravity="center"
     android:stretchMode="columnWidth"
-    android:numColumns="auto_fit"
+    android:numColumns="2"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"

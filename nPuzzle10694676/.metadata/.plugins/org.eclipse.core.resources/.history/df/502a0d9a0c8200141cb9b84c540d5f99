@@ -1,0 +1,115 @@
+package nl.mprog.projects.nPuzzle10694676;
+
+import java.util.ArrayList;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+
+public class ImageSelection extends ActionBarActivity {
+	private ArrayList<Bitmap> imagess;
+	private GridAdapter gridAdapter;
+	public static int screenWidth;
+	//  Checks if GamePlay class is visited
+	public static boolean visitedGamePlay = false; 
+    
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_image_selection);
+        TheScreenWidth();
+        System.out.println(visitedGamePlay + "VISITEDGAME");
+        if (visitedGamePlay == false){
+        	imageLibrary();
+    		gridAdapter = new GridAdapter(getApplicationContext(), imagess);
+            GridView gv = (GridView) findViewById(R.id.gridview);
+            gv.setAdapter(gridAdapter);
+            gv.setOnItemClickListener(new OnItemClickListener(){
+
+    			@Override
+    			public void onItemClick(AdapterView<?> parent, View view, int position,
+    					long id) {
+    				Intent intent = new Intent(getApplicationContext(), GamePlay.class);
+    				intent.putExtra("id", position);
+    				startActivity(intent);
+    			}
+            });
+        }else{
+        	Intent intent = new Intent(getApplicationContext(), GamePlay.class);
+			startActivity(intent);
+        }
+             
+    }
+	
+	public void imageLibrary(){
+        imagess = new ArrayList<Bitmap>();
+        
+        for (int i = 0; i <= 10; i++){
+        	int res = getResources().getIdentifier("puzzle_" + i, "drawable", getPackageName());
+        	if (res != 0){
+        		Bitmap b = BitmapFactory.decodeResource(getResources(), res);
+        		Bitmap scaled = Bitmap.createScaledBitmap(b, screenWidth, screenWidth, true);
+        		imagess.add(scaled);
+        	}
+        }	
+	}
+	
+	// DETERMINES THE SCREENWIDTH OF DEVICE
+	public void TheScreenWidth()
+	{
+		DisplayMetrics dm = getResources().getDisplayMetrics(); 
+		screenWidth = dm.widthPixels;
+	}
+ 
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.image_selection, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()){
+        	case (R.id.easy):
+                SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
+        		sharedPreferences.edit().remove("steps").commit();
+        		sharedPreferences.edit().remove("level").commit();
+        		GamePlay.columns = 3;
+        		GamePlay.count = 0;
+        	return true;
+        	
+        	case (R.id.medium):
+                SharedPreferences shared = getSharedPreferences("Data", MODE_PRIVATE);
+        		shared.edit().remove("steps").commit();
+        		shared.edit().remove("level").commit();
+        		GamePlay.columns = 4;
+        		GamePlay.count = 0;
+        	return true;
+        	
+        	case (R.id.difficult):
+                SharedPreferences Preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        		Preferences.edit().remove("steps").commit();
+        		Preferences.edit().remove("level").commit();
+        		GamePlay.columns = 5;
+        		GamePlay.count = 0;
+        	return true;
+        	
+        	default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+}

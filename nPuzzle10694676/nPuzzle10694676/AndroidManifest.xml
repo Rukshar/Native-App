@@ -14,38 +14,38 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ImageSelection"
-            android:label="@string/app_name" 
-            android:configChanges="orientation|screenSize">
+            android:name=".ImageSelectionActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".GamePlay"
-            android:label="@string/app_name" 
-            android:configChanges="orientation|screenSize">
+            android:name=".GamePlayActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="nl.mprog.projects.nPuzzle10694676.GAMEPLAY" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
-            android:name=".YouWin"
-            android:label="@string/app_name" 
-            android:configChanges="orientation|screenSize">
+        <activity
+            android:name=".YouWinActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="nl.mprog.projects.nPuzzle10694676.YOUWIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-         
     </application>
 
 </manifest>

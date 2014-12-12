@@ -42,7 +42,7 @@ public class PlayAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ImageView iv;
-		int para1 = ImageSelection.screenWidth/GamePlay.columns;
+		int para1 = ImageSelectionActivity.screenWidth/GamePlayActivity.columns;
 		
 		if(view == null){
 			iv = new ImageView(context);
