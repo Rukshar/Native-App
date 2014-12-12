@@ -3,7 +3,6 @@ package nl.mprog.projects.nPuzzle10694676;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class YouWin extends Activity {
-
+	private int shuffles;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -19,7 +19,7 @@ public class YouWin extends Activity {
 		setContentView(R.layout.youwin);
 		Intent i = getIntent();
 		int position = (Integer) i.getExtras().get("Images");
-		int shuffles = (Integer) i.getExtras().get("shuffles");
+		shuffles = (Integer) i.getExtras().get("shuffles");
 		
 		Bitmap background = GridAdapter.puzzles.get(position);
 		ImageView iv = (ImageView) findViewById(R.id.imageView2);
@@ -32,8 +32,8 @@ public class YouWin extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent mintent = new Intent(YouWin.this, ImageSelection.class);
-				YouWin.this.startActivity(mintent);
+				Intent intent = new Intent(getApplicationContext(), ImageSelection.class);
+				startActivity(intent);
 				
 			}
 		});

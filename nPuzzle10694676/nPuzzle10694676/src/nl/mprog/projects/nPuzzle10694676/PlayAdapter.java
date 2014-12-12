@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,7 +42,7 @@ public class PlayAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ImageView iv;
-		int para1 = GamePlay.screenWidth/GamePlay.columns;
+		int para1 = ImageSelection.screenWidth/GamePlay.columns;
 		
 		if(view == null){
 			iv = new ImageView(context);

@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +21,9 @@ import android.widget.AdapterView.OnItemClickListener;
 public class GamePlay extends Activity {
 	public static int height;
 	public static int width;
-	public static int columns;
-	public static int screenWidth;
+	public static int columns = 4;
 	private int cropsIndexSize;
-	private int count;
+	public static int count = 0;
 	private int positionImage;
 	private TextView steps;
 	private Bitmap emptyTile;
@@ -48,10 +45,9 @@ public class GamePlay extends Activity {
 		positionImage = (Integer) intent.getExtras().get("id");
 		
 		//Load all functions
-		System.out.println(columns + "COLUMNS IN ONCREATE");
-		Log.d("test", columns + "COLUMNS IN ONCREATE");
+		System.out.println(columns + "columns in oncreate");
+		System.out.println(count + "counts in oncreate");
 		load();
-		TheScreenWidth();
 	
 		//LOAD VIEWS
 		playAdapter = new PlayAdapter(getApplicationContext(), crops);
@@ -76,54 +72,46 @@ public class GamePlay extends Activity {
 	public void load()
 	{
 		SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
-		columns = sharedPreferences.getInt("level", 4);
-		System.out.println(columns + "DE COLUMNS IN LOAD");
+		System.out.println(columns + "columns in load");
+		System.out.println(count + "counts in load");
+		columns = sharedPreferences.getInt("level", columns);
 		count = sharedPreferences.getInt("steps", 0);
 		createTheBitmaps();
-		newArrayIndex = new ArrayList<Integer>();
-		cropsIndexSize = sharedPreferences.getInt("size", columns*columns);
-		System.out.println(cropsIndexSize + "DE SIZE IN LOAD");
-		
-		for (int i = 0; i < cropsIndexSize; i++)
-		{
-			int value = sharedPreferences.getInt("cropsindex" + i, i);
-			newArrayIndex.add(value);
+		if (count != 0){
+			newArrayIndex = new ArrayList<Integer>();
+			cropsIndexSize = sharedPreferences.getInt("size", 0);
+				for (int i = 0; i < cropsIndexSize; i++)
+				{
+					int value = sharedPreferences.getInt("cropsindex" + i, i);
+					newArrayIndex.add(value);
+				}
+				cropsIndex = newArrayIndex;
+				indexesToBitmaps();
 		}
-		System.out.println(newArrayIndex + "NEWARRAYOFINDEXES AFTER LOAD");
-		System.out.println(solved + "SOLVED LIST");
-		indexesToBitmaps();
 	}
 	
 	// SETS ARRAYLIST OF INDEXES TO BITMAP ARRAYLIST
 	public void indexesToBitmaps()
 	{
 		 arraytocrops = new ArrayList<Bitmap>();
-		 for(int i = 0; i < newArrayIndex.size(); i++)
+		 for(int i = 0; i < cropsIndex.size(); i++)
 		 {
-			 int theIndex = newArrayIndex.get(i);
+			 int theIndex = cropsIndex.get(i);
 			 Bitmap thebitmap = solved.get(theIndex);
 			 arraytocrops.add(thebitmap);
-			 if (theIndex == newArrayIndex.size()-1)
+			 if (theIndex == cropsIndex.size()-1)
 			 {
 				 emptyTile = thebitmap;
 			 }
 		 }
 		 crops = arraytocrops; // ARRAY TO CROPS BECOMES CROPS
 	}
-		
-	// DETERMINES THE SCREENWIDTH OF DEVICE
-	public void TheScreenWidth()
-	{
-		DisplayMetrics dm = getResources().getDisplayMetrics(); 
-		screenWidth = dm.widthPixels;
-	}
-	
+			
 	// CREATES LISTS OF BITMAPS
 	public void createTheBitmaps()
 	{
 		crops = new ArrayList<Bitmap>();
 		solved = new ArrayList<Bitmap>();
-		System.out.println(columns + "DE COLUMNS IN CREATEBITMAPS");
 		try
 		{
 			Bitmap background = GridAdapter.puzzles.get(positionImage);
@@ -144,7 +132,6 @@ public class GamePlay extends Activity {
 			e.printStackTrace();
 		}
 		createArrayOfIndexes(); //CREATE ALSO ARRAYLIST WITH INDEXES
-		System.out.println(cropsIndex + "Arralist with indexes AFTER BITMAP");
 		crops.remove(crops.size()-1);
 		solved.remove(solved.size()-1);
 		addEmptySpot();
@@ -154,7 +141,6 @@ public class GamePlay extends Activity {
 	public void createArrayOfIndexes()
 	{
 		cropsIndex = new ArrayList<Integer>();
-		System.out.println(columns + "DE COLUMNS IN CREATEARRAYLISTOFINDEXES");
 		 for(int i = 0; i < (columns*columns); i++)
 		 {
 			 cropsIndex.add(i);
@@ -169,6 +155,7 @@ public class GamePlay extends Activity {
 		empty.recycle();
 	 	crops.add(croppedEmpty);
 		solved.add(croppedEmpty);
+		emptyTile = crops.get(crops.size()-1); 
 	}
 	
 	//WIN CONSTRAINT
@@ -179,6 +166,7 @@ public class GamePlay extends Activity {
 			NewIntent.putExtra("shuffles", count);
 			NewIntent.putExtra("Images", positionImage);
 			startActivity(NewIntent);
+			count = 0;
 			}
 	}
 	
@@ -189,10 +177,15 @@ public class GamePlay extends Activity {
 			Collections.reverse(crops);
 			Collections.rotate(crops.subList(0, (columns*columns)), -1);
 			playAdapter.notifyDataSetChanged();
+			Collections.swap(cropsIndex, 0, 1);
+			Collections.reverse(cropsIndex);
+			Collections.rotate(cropsIndex.subList(0, (columns*columns)), -1);
 		}else{
 			Collections.reverse(crops);
 			Collections.rotate(crops.subList(0, (columns*columns)), -1);
 			playAdapter.notifyDataSetChanged();
+			Collections.reverse(cropsIndex);
+			Collections.rotate(cropsIndex.subList(0, (columns*columns)), -1);
 		}
 	}
 	
@@ -269,6 +262,7 @@ public class GamePlay extends Activity {
 	{
 		SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
+		System.out.println(cropsIndex + "CROPSINDEX IN SAVED");
 		
 		for (int i = 0; i < cropsIndex.size(); i++)
 		{
@@ -279,18 +273,15 @@ public class GamePlay extends Activity {
 		editor.putInt("steps", count);
 		editor.putInt("size", cropsIndex.size());
 		editor.commit();
-		System.out.println(columns + "COLUMNS IN SAVED");
-		System.out.println(cropsIndex.size() + "SIZE IN SAVED");
 	}
 	
+
 	// SAVES VALUES WHEN APP IS KILLED
 	protected void onPause()
 	{
 		super.onPause();
-		System.out.println("I WAS HERE");
 		saved();
-	}
-
+}
 	
 	// OPTIONS MENU
 	@Override
@@ -313,8 +304,6 @@ public class GamePlay extends Activity {
 		   	return true;
 		   	
 		   	case(R.id.easygame):
-				SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
-		   		sharedPreferences.edit().remove("size");
 		   		columns = 3;
 		   		count = 0;
 		   		Intent intent = getIntent();
@@ -322,20 +311,16 @@ public class GamePlay extends Activity {
 		   	return true;
 		   	
 		   	case(R.id.mediumgame):
-		   		this.getSharedPreferences("Data", MODE_PRIVATE).edit().clear().commit();
 		   		columns = 4;
 		   		count = 0;
 			   	Intent intentje = getIntent();
-			   	finish();
 			   	startActivity(intentje);
 		   	return true;
 		   	
 		   	case(R.id.difficultgame):
-		   		this.getSharedPreferences("Data", MODE_PRIVATE).edit().clear().commit();
 		   		columns = 5;
 		   		count = 0;
 		   		Intent intents = getIntent();
-		   		finish();
 		   		startActivity(intents);
 		   	return true;
 		   	

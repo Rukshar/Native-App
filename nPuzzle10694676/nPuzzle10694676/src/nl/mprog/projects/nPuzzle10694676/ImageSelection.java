@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,30 +17,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 public class ImageSelection extends ActionBarActivity {
-	public ArrayList<Bitmap> imagess;
-	public GridAdapter gridAdapter;
+	private ArrayList<Bitmap> imagess;
+	private GridAdapter gridAdapter;
+	public static int screenWidth;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_selection);
+        TheScreenWidth();
+        imageLibrary();
         
-        imagess = new ArrayList<Bitmap>();
-        
-        for (int i = 0; i <= 10; i++){
-        	int res = getResources().getIdentifier("puzzle_" + i, "drawable", getPackageName());
-        	System.out.println(res);
-        	if (res != 0){
-        		Bitmap b = BitmapFactory.decodeResource(getResources(), res);
-        		Bitmap scaled = Bitmap.createScaledBitmap(b, 500, 500, true);
-        		System.out.println(scaled);
-        		imagess.add(scaled);
-        		//System.out.println(imagess);
-        	}
-        }
-        
-       
-		GridAdapter gridAdapter = new GridAdapter(getApplicationContext(), imagess);
+		gridAdapter = new GridAdapter(getApplicationContext(), imagess);
         GridView gv = (GridView) findViewById(R.id.gridview);
         gv.setAdapter(gridAdapter);
         gv.setOnItemClickListener(new OnItemClickListener(){
@@ -54,7 +42,27 @@ public class ImageSelection extends ActionBarActivity {
 				startActivity(intent);
 			}
         });     
-    }	
+    }
+	
+	public void imageLibrary(){
+        imagess = new ArrayList<Bitmap>();
+        
+        for (int i = 0; i <= 10; i++){
+        	int res = getResources().getIdentifier("puzzle_" + i, "drawable", getPackageName());
+        	if (res != 0){
+        		Bitmap b = BitmapFactory.decodeResource(getResources(), res);
+        		Bitmap scaled = Bitmap.createScaledBitmap(b, screenWidth, screenWidth, true);
+        		imagess.add(scaled);
+        	}
+        }	
+	}
+	
+	// DETERMINES THE SCREENWIDTH OF DEVICE
+	public void TheScreenWidth()
+	{
+		DisplayMetrics dm = getResources().getDisplayMetrics(); 
+		screenWidth = dm.widthPixels;
+	}
  
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,15 +78,20 @@ public class ImageSelection extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
         	case (R.id.easy):
+        		SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
+        		sharedPreferences.edit().remove("steps").commit();
         		GamePlay.columns = 3;
+        		GamePlay.count = 0;
         	return true;
         	
         	case (R.id.medium):
         		GamePlay.columns = 4;
+        		GamePlay.count = 0;
         	return true;
         	
         	case (R.id.difficult):
         		GamePlay.columns = 5;
+        		GamePlay.count = 0;
         	return true;
         	
         	default:
