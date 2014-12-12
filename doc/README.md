@@ -4,7 +4,7 @@
 
 > A list of classes and public methods (and their return types and/or arguments) that I’ve decided to implement.
 
-### Class main_activity:
+### Class ImageSelectionActivity:
 Welcome screen, possibly a welcome sound. The screen shows a list of images (as buttons)  and a settings button to change the level and possibly to turn sounds on or off. Some functions in this class are:
 ```java
 public void StartGame(){
@@ -15,10 +15,10 @@ public void Settings(){
 }
 ```
 
-### Class settings:
+### Class settingsActivity:
 Shows three buttons with three modes, namely “easy”, “medium” and “hard”. The default settings should be medium. The chosen setting could be displayed with a checkmark next to the button. The sound setting should also be a button . If another difficulty is chosen this difficulty should be remembered . The text should change into on or off depending on the user’s behavior. There should also be a back button to go back to the main_activity.
 
-### Class start_game:
+### Class GamePlayActivity:
 The selected image should be shown, this is how the solution should look. After 3 seconds this image should disappear and a shuffled image (reversed) should appear. The user can know swipe the tiles. Some functions in this class are:
 ```java
 
@@ -50,7 +50,7 @@ public void quitGame(){
 
 ```
 
-### Class Solved:
+### Class YouWinActivity:
 This activity starts when a puzzle is solved. It congratulates the user, displays the original image and displays the number of moves they have used to solve the puzzle. There is a button to return to the main_activity class. Some functions in this class are:
 ```java
 public void showImage(){
@@ -110,4 +110,10 @@ This is the solved screen. It congratulates the user and displays the number of 
 
 ## APIs
 
->A list of APIs that I will be using to provide functionality in my app.
+>Bitmap and SharedPreferences
+
+## Actual Design (decisions)
+
+I have now 5 classes of which 3 are activities, namely the ImageSelectionActivity, the GamePlayActivity and the YouWinActivity. The two other classes are Adapters used for the GridView in the ImageSelectionActvity and GamePlayActivity. The reason for using a GridView instead of a TableLayout (or something else) is because I already used
+a GridView for the ImageSelectionActivty and therefore I already knew how to work with that. In the ImageSelectionActivity I have chosen to use the device's menubutton to change the difficulty. This seemed logical, because the default setting had to be medium and the device's menubutton is not really in the forground. Some more design decisions
+are that I have chosen to not destroy the app when clicking on the backbutton when busy with the puzzle, because the backbutton could be pressed by accident. I also have chosen to display the puzzle when the puzzle was not finished, however the app was killed. 

@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 public class ImageSelectionActivity extends ActionBarActivity {
-	private ArrayList<Bitmap> imagess;
+	private ArrayList<Bitmap> imagelibs;
 	private GridAdapter gridAdapter;
 	public static int screenWidth;
     
@@ -28,7 +28,7 @@ public class ImageSelectionActivity extends ActionBarActivity {
         TheScreenWidth();
         imageLibrary();
         
-		gridAdapter = new GridAdapter(getApplicationContext(), imagess);
+		gridAdapter = new GridAdapter(getApplicationContext(), imagelibs);
         GridView gv = (GridView) findViewById(R.id.gridview);
         gv.setAdapter(gridAdapter);
         gv.setOnItemClickListener(new OnItemClickListener(){
@@ -59,14 +59,14 @@ public class ImageSelectionActivity extends ActionBarActivity {
 	
 	// Gets all the images
 	public void imageLibrary(){
-        imagess = new ArrayList<Bitmap>();
+        imagelibs = new ArrayList<Bitmap>();
         
         for (int i = 0; i <= 10; i++){
         	int res = getResources().getIdentifier("puzzle_" + i, "drawable", getPackageName());
         	if (res != 0){
         		Bitmap b = BitmapFactory.decodeResource(getResources(), res);
         		Bitmap scaled = Bitmap.createScaledBitmap(b, screenWidth, screenWidth, true);
-        		imagess.add(scaled);
+        		imagelibs.add(scaled);
         	}
         }	
 	}
