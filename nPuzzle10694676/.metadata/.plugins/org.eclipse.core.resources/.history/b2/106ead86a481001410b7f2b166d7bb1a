@@ -76,8 +76,8 @@ public class GamePlay extends Activity {
 		System.out.println(count + "counts in load");
 		columns = sharedPreferences.getInt("level", columns);
 		count = sharedPreferences.getInt("steps", 0);
-		System.out.println(columns + "columns in load na shared");
-		System.out.println(count + "counts in load na shared");
+		System.out.println(columns + "columns in load");
+		System.out.println(count + "counts in load");
 		createTheBitmaps();
 		if (count != 0){
 			newArrayIndex = new ArrayList<Integer>();

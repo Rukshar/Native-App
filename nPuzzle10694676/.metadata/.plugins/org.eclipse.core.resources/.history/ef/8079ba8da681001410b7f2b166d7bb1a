@@ -78,7 +78,7 @@ public class ImageSelection extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
         	case (R.id.easy):
-                SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
+        		SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
         		sharedPreferences.edit().remove("steps").commit();
         		sharedPreferences.edit().remove("level").commit();
         		GamePlay.columns = 3;
@@ -86,17 +86,11 @@ public class ImageSelection extends ActionBarActivity {
         	return true;
         	
         	case (R.id.medium):
-                SharedPreferences shared = getSharedPreferences("Data", MODE_PRIVATE);
-        		shared.edit().remove("steps").commit();
-        		shared.edit().remove("level").commit();
         		GamePlay.columns = 4;
         		GamePlay.count = 0;
         	return true;
         	
         	case (R.id.difficult):
-                SharedPreferences Preferences = getSharedPreferences("Data", MODE_PRIVATE);
-        		Preferences.edit().remove("steps").commit();
-        		Preferences.edit().remove("level").commit();
         		GamePlay.columns = 5;
         		GamePlay.count = 0;
         	return true;
